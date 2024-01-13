@@ -5,8 +5,10 @@ import userRoutes from "./routes/user.routes.js";
 import connectDB from "./config/db.connection.js";
 import {errorHandler} from './middleware/errorMiddleware.js'
 import {isAuth} from "./middleware/auth.middleware.js";
+import cors from 'cors'
 
 const app = express();
+app.use(cors())
 
 app.use(express.json());
 config();
