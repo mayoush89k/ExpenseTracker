@@ -15,7 +15,7 @@ app.use("/expenses",isAuth, expenseRoutes);
 app.use("/users", userRoutes)
 app.use(errorHandler)
 
-const port = process.env.port || 3000;
+const port = process.env.port || 3434;
 connectDB().then(() => {
   app.listen(port, () => console.log(`Server running on ${port}`));
 });
