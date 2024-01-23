@@ -41,7 +41,6 @@ function App() {
               </div>
             )}
             <Routes>
-              <Route path="/email" element={<Email />} />
               <Route path="/" element={<Homepage />} />
               <Route path="/myHistory" element={<History />} />
               <Route path="/login" element={<Login />} />
