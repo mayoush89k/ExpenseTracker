@@ -19,14 +19,21 @@ const userSchema = Schema({
             },
             message: "invalid email address",
           }
-    },
-    password:{
-        type:String,
-        required:[true,'Password is required'],
-        match: [
-            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,1024}$/,
-            "please enter strong password",
-          ],
+        },
+        password:{
+            type:String,
+            required:[true,'Password is required'],
+            validate: {
+                validator: function (value) {
+                  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,1024}$/;
+                  return passwordRegex.test(value);
+                },
+                message: "Please enter strong password",
+              }
+        //     match: [
+        //         /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,1024}$/,
+        //     "please enter strong password",
+        //   ],
     },
     expenses:[{
         type:Schema.Types.ObjectId,

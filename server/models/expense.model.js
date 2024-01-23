@@ -25,7 +25,7 @@ const expenseSchema = new Schema({
   },
   priceNIS: Number,
   priceUSD: Number,
-  arrival: { type: Boolean, default: false },
+  isArrived: { type: Boolean, default: false },
 });
 
 const Expense = model("Expense", expenseSchema);

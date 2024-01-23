@@ -3,14 +3,17 @@ import STATUS_CODES from "../constants/statusCodes.js";
 import Expense from "../models/expense.model.js";
 
 const sendError = (res, statusCode, errorMsg) => {
-    console.log('statusCode: ', statusCode);
+  console.log("statusCode: ", statusCode);
   res.status(statusCode);
   throw new Error(errorMsg);
 };
 
 export const getAllExpenses = async (req, res, next) => {
   try {
-    const expenses = await Expense.find({});
+    const {user} = req
+    const expenses = await Expense.find({user: user._id})
+      .sort({ transactionDate: -1 })
+      .populate("user");
     res.send(expenses);
   } catch (error) {
     next(error);
@@ -20,9 +23,9 @@ export const getExpenseById = async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!isValidObjectId(id)) {
-      sendError(res , STATUS_CODES.BAD_REQUEST, "Invalid Id");
+      sendError(res, STATUS_CODES.BAD_REQUEST, "Invalid Id");
     }
-    const expense = await Expense.findById(id);
+    const expense = await Expense.findById(id).populate("user");
     if (!expense) {
       sendError(res, STATUS_CODES.NOT_FOUND, "Expense is not found");
     }
@@ -43,16 +46,6 @@ export const addNewExpense = async (req, res, next) => {
       orderID,
     } = req.body;
 
-    if (
-      !(onlineStore && productName && transactionDate,
-      (priceUSD || priceNIS) && isArrived && orderID)
-    ) {
-      sendError(
-        res,
-        STATUS_CODES.BAD_REQUEST,
-        "please fill all fields: onlineStore , productName , transactionDate , price USD/NIS, isArrived , orderID"
-      );
-    }
     const existingExpense = await Expense.findOne({ orderID });
 
     if (existingExpense) {
@@ -66,7 +59,9 @@ export const addNewExpense = async (req, res, next) => {
       priceNIS,
       orderID,
       isArrived,
+      user: req.user._id,
     });
+    
     res.status(STATUS_CODES.CREATED).send(newExpense);
   } catch (error) {
     next(error);
@@ -81,7 +76,7 @@ export const updateAnExistingExpense = async (req, res, next) => {
     await Expense.findByIdAndUpdate(id, {
       ...req.body,
     });
-    const updatedExpense = await Expense.findById(id)
+    const updatedExpense = await Expense.findById(id);
     res.send(updatedExpense);
   } catch (error) {
     next(error);
@@ -91,16 +86,15 @@ export const deleteAnExpense = async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!isValidObjectId(id)) {
-        sendError(res.STATUS_CODES.BAD_REQUEST, "Invalid Id");
+      sendError(res.STATUS_CODES.BAD_REQUEST, "Invalid Id");
     }
-    const deletedExpense = await Expense.findById(id)
-    if(!deletedExpense){
-        return sendError(res, STATUS_CODES.NOT_FOUND,"Expense is not found")
+    const deletedExpense = await Expense.findById(id);
+    if (!deletedExpense) {
+      return sendError(res, STATUS_CODES.NOT_FOUND, "Expense is not found");
     }
-    await Expense.deleteOne({orderID: deletedExpense.orderID});
-    res.send(`${deletedExpense.productName} has been deleted`)
+    await Expense.deleteOne({ orderID: deletedExpense.orderID });
+    res.send(`${deletedExpense.productName} has been deleted`);
   } catch (error) {
     next(error);
   }
 };
-

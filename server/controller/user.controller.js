@@ -5,7 +5,6 @@ import User from "../models/user.model.js";
 import { isValidObjectId } from "mongoose";
 
 const sendError = (res, statusCode, errorMsg) => {
-  console.log("statusCode: ", statusCode);
   res.status(statusCode);
   throw new Error(errorMsg);
 };
@@ -42,6 +41,7 @@ export const createUser = async (req, res, next) => {
 };
 export const loginUser = async (req, res, next) => {
   try {
+    console.log('req.body: ', req.body);
     const {username , password} = req.body
     if(!username || !password){
         return sendError(res, STATUS_CODES.BAD_REQUEST, "Username and Password are required")
@@ -63,9 +63,8 @@ export const loginUser = async (req, res, next) => {
     },process.env.SECRET_KEY, {
         expiresIn: "15m"
     })
-
     console.log("token",token)
-    res.send(`${user.username} got token: ${token}`)
+    res.send({user: user , token: token})
   } catch (error) {
     next(error);
   }
@@ -97,6 +96,7 @@ export const getAllUsers = async (req, res, next) => {
 };
 export const updateUser = async (req, res, next) => {
   try {
+    
   } catch (error) {
     next(error);
   }
@@ -107,3 +107,16 @@ export const deleteUser = async (req, res, next) => {
     next(error);
   }
 };
+
+
+export const getEmails = async (req , res, next) => {
+  try {
+    const users = await User.find({})
+    const emails = users.map((user) => user.email)
+    console.log(emails)
+    res.send('ok')
+  } catch (error) {
+    next(error)
+  }
+}
+
