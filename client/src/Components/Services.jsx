@@ -10,9 +10,9 @@ export default function Services() {
   const { user } = useUser();
 
   return (
-    <div className="w-full h-[90vh] flex flex-col justify-start items-center">
+    <div className={`pt-20 w-full h-[665px] flex flex-col justify-start items-center`}>
       <ToastContainer  />
-
+{console.log(`h-${window.innerHeight}px`)}
       <button
         onClick={async () => {
           console.log(user);

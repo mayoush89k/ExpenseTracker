@@ -21,8 +21,10 @@ export default function AddCard({ isOpen, onClose, expense }) {
   const { expenses, error, setError, loading, createNewExpense } = useExpense();
 
   const saveHandle = () => {
-    setIsEdit(false);
+    console.log('setIsEdit: ', isEdit);
     createNewExpense(newExpense);
+    console.log('newExpense: ', newExpense);
+    !error && setIsEdit(false);
     if (error && loading) {
       setTimeout(() => {
         onClose();
@@ -72,7 +74,7 @@ export default function AddCard({ isOpen, onClose, expense }) {
           <div>
             {/* error */}
             {error ? (
-              <p>{error?.response?.data?.message}</p>
+              <p>Error:{error.message} || {error?.response?.data?.message}</p>
             ) : (
               <form>
                 {/* new Expense */}

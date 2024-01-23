@@ -15,7 +15,7 @@ export default function Card({ expense }) {
   let date = new Date(expense.transactionDate).toLocaleDateString("en-GB");
   return (
     <div
-      className="cursor-pointer group max-w-md mx-auto my-6 rounded-md overflow-hidden text-2xl
+      className="cursor-pointer group max-w-md mx-auto my-6 rounded-md overflow-hidden text-lg md:text-2xl
        bg-white dark:bg-gray-800 text-gray-800 
        dark:text-white shadow-md dark:shadow-outer dark:bg-dark-2  dark:shadow-dark-1 "
       onClick={() => !isModalOpen && openModal()}
@@ -36,12 +36,12 @@ export default function Card({ expense }) {
           )}
         </div>
         <div className="p-4 flex flex-col justify-center items-center">
-          <p className="px-5 py-2 m-2 rounded-md text-lg font-extrabold bg-dark-1 bg-opacity-55 text-dark-4 dark:bg-light-1 dark:text-dark-4 group-hover:dark:bg-opacity-35 group-hover:bg-opacity-100 ">
+          <p className="px-3 md:px-5 py-2 m-2 rounded-md text-base md:text-lg font-extrabold bg-dark-1 bg-opacity-55 text-dark-4 dark:bg-light-1 dark:text-dark-4 group-hover:dark:bg-opacity-35 group-hover:bg-opacity-100 ">
             {expense?.priceNIS
               ? expense?.priceNIS + "₪"
               : expense?.priceUSD + "$"}
           </p>
-          <p className="px-5 py-2 m-2 rounded-md text-lg font-extrabold bg-dark-1 bg-opacity-55 text-dark-4 dark:bg-light-1 dark:text-dark-4 group-hover:dark:bg-opacity-35 group-hover:bg-opacity-100">
+          <p className="px-3 md:px-5 py-2 m-2 rounded-md text-base md:text-lg font-extrabold bg-dark-1 bg-opacity-55 text-dark-4 dark:bg-light-1 dark:text-dark-4 group-hover:dark:bg-opacity-35 group-hover:bg-opacity-100">
             {date}
           </p>
         </div>

@@ -6,8 +6,8 @@ export const ExpensesContext = createContext();
 export const useExpense = () => useContext(ExpensesContext);
 
 export const ExpensesProvider = ({ children }) => {
-    const url = "https://expense-tracker-api-vn03.onrender.com/";
-  // const url = "http://localhost:3434/";
+  // const url = "https://expense-tracker-api-vn03.onrender.com/";
+  const url = "http://localhost:3434/";
 
   const [expenses, setExpenses] = useState([]);
   const [error, setError] = useState("");
@@ -16,11 +16,16 @@ export const ExpensesProvider = ({ children }) => {
   // Add expense to the list of expenses.
   const createNewExpense = (expense) => fetchPostNewExpense(expense);
   const fetchPostNewExpense = async (newExpense) => {
+    const token = localStorage.getItem("token");
     try {
       setLoading(true);
-      console.log("newExpense: ", newExpense);
-      const expense = await axios.post(url + "expenses", {
-        ...newExpense,
+      const expense = await fetch(url + "expenses", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...newExpense }),
       });
 
       setExpenses([...expenses, expense.data]);
@@ -28,19 +33,25 @@ export const ExpensesProvider = ({ children }) => {
       await fetchGetAllExpenses();
       return expense.data;
     } catch (error) {
-        setLoading(false)
+      setLoading(false);
       setError(error);
     }
   };
   // update expense
   const updateExpense = (expense) => fetchUpdating(expense);
   const fetchUpdating = async (newExpense) => {
+    const token = localStorage.getItem("token")
     try {
       setLoading(true);
-      const response = await axios.put(
+      const response = await fetch(
         url + "expenses/" + newExpense._id.toString(),
         {
-          ...newExpense,
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newExpense),
         }
       );
       await fetchGetAllExpenses();
@@ -56,7 +67,7 @@ export const ExpensesProvider = ({ children }) => {
   const getAll = () => fetchGetAllExpenses();
 
   const fetchGetAllExpenses = async () => {
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
     try {
       setLoading(true);
       const response = await axios.get(`${url}expenses`, {

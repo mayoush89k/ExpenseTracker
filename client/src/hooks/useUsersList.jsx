@@ -71,7 +71,6 @@ const useUsersList = () => {
       }
       const data = await response.json();
       const token = data.token;
-      console.log("user ", data.user);
 
       setLoading(false);
       if (token) {
@@ -97,14 +96,12 @@ const useUsersList = () => {
   };
 
   const sendEmail = async (email, text) => {
-    console.log('text: ', text);
-    console.log('email: ', email);
     try {
       const response = await axios.post(
-        url + "emails/",
-        JSON.stringify({
+        url + "emails",
+      {body:  JSON.stringify({
           text: text,
-        })
+        })}
       );
       console.log(response)
       return response.data

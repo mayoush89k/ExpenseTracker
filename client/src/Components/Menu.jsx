@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 
 export default function Menu() {
+  const navigate = useNavigate()
   const menuItems = [
     {
       name: "Home",
@@ -28,44 +29,43 @@ export default function Menu() {
   const { user , logOutUser } = useUser();
 
   return (
-    <nav className="bg-blue-500 text-black font-extrabold dark:text-dark-4 py-4 w-[90vw] m-auto">
+    <nav className="text-black font-extrabold dark:text-dark-4 py-0 w-full md:py-4 md:w-[90vw] m-auto transition-transform duration-75 ease-in">
       {!user?.username ? (
-        <ul className="flex space-x-4 justify-center items-center">
+        <ul className="flex space-x-4 justify-center items-center ">
           <Link
-            className="bg-light-4 dark:bg-dark-3 hover:bg-light-1 hover:text-light-4 dark:hover:text-dark-4 px-4 py-2 rounded transition duration-300 ease-in-out"
+            className="bg-light-4 dark:bg-dark-3 hover:bg-light-1 hover:text-light-4 dark:hover:text-dark-4 px-2 py-1 md:px-4 md:py-2 rounded transition duration-300 ease-in-out"
             to={"/login"}
           >
             Login
           </Link>
           <Link
-            className="bg-light-4 dark:bg-dark-3 hover:bg-light-1 hover:text-light-4 dark:hover:text-dark-4 px-4 py-2 rounded transition duration-300 ease-in-out"
+            className="bg-light-4 dark:bg-dark-3 hover:bg-light-1 hover:text-light-4 dark:hover:text-dark-4 px-2 py-1 md:px-4 md:py-2 rounded transition duration-300 ease-in-out"
             to={"/register"}
           >
             Register
           </Link>
         </ul>
       ) : (
-        <ul className="flex space-x-4 justify-center items-center">
+        <ul className=" p-4 flex flex-col md:flex-row space-x-4 justify-center items-start md:items-center md:justify-center bg-light-1/50 dark:bg-dark-4/50 md:bg-transparent">
           {menuItems.map((item, index) => (
             <Link
               key={index}
               to={item.link}
-              className="bg-light-4 dark:bg-dark-3 hover:bg-light-1 hover:text-light-4 dark:hover:text-dark-4 px-4 py-2 rounded transition duration-300 ease-in-out"
+              className="bg-light-4 dark:bg-dark-3 hover:bg-light-1 hover:text-light-4 dark:hover:text-dark-4  m-4 px-4 py-2 rounded transition duration-300 ease-in-out"
             >
               {item.name}
             </Link>
           ))}
           {user?.username ? (
-        <div>
           <button
             className="bg-light-4 dark:bg-dark-3 hover:bg-light-1 hover:text-light-4 dark:hover:text-dark-4 px-4 py-2 rounded transition duration-300 ease-in-out"
             onClick={() => {
               logOutUser()
+              setTimeout(() => {navigate('/')}, 2000)
             }}
           >
             Logout
           </button>
-        </div>
       ) : (
         <div>
           <button
