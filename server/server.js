@@ -6,7 +6,8 @@ import connectDB from "./config/db.connection.js";
 import {errorHandler} from './middleware/errorMiddleware.js'
 import {isAuth} from "./middleware/auth.middleware.js";
 import cors from 'cors'
-import sendWeeklyEmails from "./utils/emailService.js";
+// import sendWeeklyEmails from "./utils/emailService.js";
+import { sendEmail } from "./controller/email.controller.js";
 
 const app = express();
 app.use(cors())
@@ -17,7 +18,7 @@ config();
 app.use("/expenses",isAuth, expenseRoutes);
 // app.use("/expenses", expenseRoutes);
 app.use("/users", userRoutes)
-app.post('/emails' , sendWeeklyEmails)
+app.post('/emails' , sendEmail)
 app.use(errorHandler)
 
 const port = process.env.port || 3434;

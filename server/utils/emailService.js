@@ -2,29 +2,36 @@ import nodemailer from "nodemailer";
 import cron from "node-cron";
 
 let mailTransporter = nodemailer.createTransport({
-  host: "smtp.ethereal.email",
-  port: 587,
+  host: process.env.MAIL_HOST,
+  // port: 587,
   auth: {
-    user: "kasey.weimann@ethereal.email",
-    pass: "fVuWGduUeBVwcT3R8R",
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASSWORD,
   },
 });
 
 let details = {
   from: process.env.MAIL_USER,
-  to: "wwhatever70@gmail.com",
+  to: "mayoush89k@gmail.com",
   subject: "Weekly Tracker",
+  text: 'req.body.text '
 };
 
-const sendWeeklyEmails = (req, res, next) =>
-  mailTransporter.sendMail({ ...details, text: req.body.text }, (err) => {
-    try {
-      res.send("email has been sent");
-    } catch (error) {
-      console.log(error);
-      next(error);
-    }
-  });
+const sendWeeklyEmails = (req, res, next) => {
+  try {
+    mailTransporter.sendMail(details, (err) => {
+      console.log('req ', req.body)
+      try {
+        res.send("email has been sent");
+      } catch (error) {
+        console.log(error);
+        next(error);
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 // sendWeeklyEmails()
 // cron.schedule("0 12 * * 6", () => {
