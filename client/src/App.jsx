@@ -12,7 +12,6 @@ import Register from "./Components/Register";
 import { UserProvider } from "./context/UserContext";
 import { FaBars } from "react-icons/fa";
 import { useState } from "react";
-import Email from './Components/Email'
 
 function App() {
   const [menuViewer, setMenuViewer] = useState(false);
