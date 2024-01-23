@@ -1,5 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import useUsersList from "../hooks/useUsersList";
+import { useUser } from "../context/UserContext";
 
 export default function Services() {
-  return <div className="w-full h-[90vh] flex flex-col justify-start items-center">Services</div>;
+  const [result, setResult] = useState("");
+  const notify = (text) => toast(text);
+  const { sendEmail } = useUsersList();
+  const { user } = useUser();
+
+  return (
+    <div className="w-full h-[90vh] flex flex-col justify-start items-center">
+      <ToastContainer  />
+
+      <button
+        onClick={async () => {
+          console.log(user);
+          setResult(await sendEmail(user.email, "Weekly record: ", user.username));
+          notify(result);
+          console.log('result: ', result);
+        }}
+      >
+        Send Email
+      </button>
+    </div>
+  );
 }

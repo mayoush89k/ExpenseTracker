@@ -5,7 +5,6 @@ import { AiFillPlusCircle } from "react-icons/ai";
 import "./style.css";
 import Card from "./Card";
 import { useExpense } from "../context/ExpenseContext";
-import EditCard from "./EditCard";
 import AddCard from "./AddCard";
 
 export default function History() {
@@ -15,7 +14,6 @@ export default function History() {
   const closeModal = () => setIsModalOpen(false);
 
   useEffect(() => {
-    console.log("use Effect ");
     getAll();
   }, []);
   return (

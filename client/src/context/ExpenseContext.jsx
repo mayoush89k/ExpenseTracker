@@ -56,13 +56,16 @@ export const ExpensesProvider = ({ children }) => {
   const getAll = () => fetchGetAllExpenses();
 
   const fetchGetAllExpenses = async () => {
+    const token = localStorage.getItem("token")
     try {
       setLoading(true);
-      const response = await axios.get(`${url}expenses`);
-      console.log(response.data);
+      const response = await axios.get(`${url}expenses`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setExpenses(response.data);
       setLoading(false);
     } catch (error) {
+      setLoading(false);
       setError(error);
     }
   };

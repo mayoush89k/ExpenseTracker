@@ -8,22 +8,27 @@ import AboutUs from "./Components/AboutUs";
 import ContactUs from "./Components/ContactUs";
 import { ExpensesProvider } from "./context/ExpenseContext";
 import Services from "./Components/Services";
+import Register from "./Components/Register";
+import { UserProvider } from "./context/UserContext";
 
 function App() {
   return (
     <>
       <ExpensesProvider>
-        <BrowserRouter>
-          <Menu />
-          <Routes>
-            <Route path="/" element={<Homepage />} />
-            <Route path="/myHistory" element={<History />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/aboutUs" element={<AboutUs />} />
-            <Route path="/contactUs" element={<ContactUs />} />
-            <Route path="/services" element={<Services />} />
-          </Routes>
-        </BrowserRouter>
+        <UserProvider>
+          <BrowserRouter>
+            <Menu />
+            <Routes>
+              <Route path="/" element={<Homepage />} />
+              <Route path="/myHistory" element={<History />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/aboutUs" element={<AboutUs />} />
+               <Route path="/contactUs" element={<ContactUs />} />
+              <Route path="/services" element={<Services />} />
+            </Routes>
+          </BrowserRouter>
+        </UserProvider>
       </ExpensesProvider>
     </>
   );
