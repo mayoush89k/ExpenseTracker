@@ -21,8 +21,8 @@ export const sendEmail = async (req, res, next) => {
     const emails = users.map((user) => user.email);
     console.log(emails);
     users.map(async (user) => {
-      const expenses = await Expense.find({
-        user: users[0]._id,
+      const expenses = await Expense.find({$and:{
+        user: user._id},
         transactionDate: {
           $gte: lastWeekStartDate,
           $lt: lastWeekEndDate,
