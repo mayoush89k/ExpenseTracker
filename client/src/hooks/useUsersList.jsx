@@ -8,8 +8,8 @@ const useUsersList = () => {
   const [error, setError] = useState(null);
   const { user, setUser } = useUser();
 
-  //   const url = "https://expense-tracker-api-vn03.onrender.com/";
-  const url = "http://localhost:3434/";
+    const url = "https://expense-tracker-api-vn03.onrender.com/";
+  // const url = "http://localhost:3434/";
 
   useEffect(() => {
     fetchData();
