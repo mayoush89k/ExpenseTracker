@@ -77,7 +77,7 @@ export default function Register() {
     }
   };
   return (
-    <main className="w-full h-[90vh] flex flex-col justify-center items-center">
+    <main className="w-full h-[77vh] flex flex-col justify-center items-center">
       <ToastContainer />
       <form
         onSubmit={handleSubmit}

@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function AboutUs() {
   return (
-    <div className="pt-20 w-full h-[90vh] flex flex-col justify-center items-center text-light-4 shadow-light-1">
+    <div className="pt-20 md:pt-0 w-full h-[78vh] flex flex-col justify-center items-center text-light-4 shadow-light-1">
       <h1 className='mb-14 font-extrabold text-2xl leading-relaxed'>
         Welcome to our Expense Tracker
       </h1>

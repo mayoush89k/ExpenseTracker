@@ -39,7 +39,7 @@ export default function Login() {
   };
 
   return (
-    <div className="w-full h-[90vh] flex flex-col justify-center items-center">
+    <div className="w-full h-[77vh] flex flex-col justify-center items-center">
       <ToastContainer />
       <form
         className="flex flex-col justify-center items-center gap-4 p-4 rounded-md  bg-light-4 shadow-light-3 shadow-md dark:bg-dark-3 dark:shadow-dark-1"

@@ -5,7 +5,7 @@ import darkWallpaper from "../assets/darkWallpaper.png";
 
 export default function Homepage() {
   return (
-    <div className="w-full h-[90vh] flex flex-col justify-center items-center">
+    <div className="w-full h-[77vh] flex flex-col justify-center items-center">
       <img
         src={
           window.matchMedia("(prefers-color-scheme: dark)").matches

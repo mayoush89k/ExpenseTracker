@@ -9,6 +9,8 @@ export const ExpensesProvider = ({ children }) => {
   const url = "https://expense-tracker-api-vn03.onrender.com/";
   // const url = "http://localhost:3434/";
 
+  const [prices, setPrices] = useState([]);
+  const [dates, setDates] = useState([]);
   const [expenses, setExpenses] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -40,7 +42,7 @@ export const ExpensesProvider = ({ children }) => {
   // update expense
   const updateExpense = (expense) => fetchUpdating(expense);
   const fetchUpdating = async (newExpense) => {
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
     try {
       setLoading(true);
       const response = await fetch(
@@ -81,14 +83,47 @@ export const ExpensesProvider = ({ children }) => {
     }
   };
 
+  const getAllDates = async () => {
+    try {
+      await getAll();
+      const dates = expenses.map((e) => e.transactionDate);
+      console.log('dates: ', dates);
+
+      setDates(dates);
+      setLoading(false);
+      return dates;
+    } catch (error) {
+      setLoading(false);
+      setError(error);
+    }
+  };
+
+  const getAllPrices = async () => {
+    try {
+      await getAll();
+      console.log(expenses)
+      const prices = expenses.map((e) => e.priceNIS || e.priceUSD);
+      console.log('prices: ', prices);
+
+      setPrices(prices);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setError(error);
+    }
+  };
   return (
     <ExpensesContext.Provider
       value={{
         expenses,
+        dates,
+        prices,
         error,
         setError,
         loading,
         getAll,
+        getAllDates,
+        getAllPrices,
         updateExpense,
         createNewExpense,
       }}
