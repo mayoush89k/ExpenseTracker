@@ -82,6 +82,7 @@ export default function Menu() {
           </button>
         </div>
       )}
+      <p className="text-light-4 dark:text-dark-1">{user.username}</p>
         </ul>
       )}
     </nav>
