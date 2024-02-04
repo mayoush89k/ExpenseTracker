@@ -31,11 +31,11 @@ export default function Login() {
       password: inputValues[1].value,
     };
     loginUser(currentUser).then(() => {
-      console.log('error: ', error);
+      console.log("error: ", error);
       if (error) {
         notify(error);
-      } else {
-        console.log('success')
+      } else if (error == "" || error == null) {
+        console.log("success");
         notify("Login Successfully");
         setTimeout(() => navigate("/myHistory"), 5000);
       }

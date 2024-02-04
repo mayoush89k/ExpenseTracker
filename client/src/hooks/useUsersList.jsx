@@ -81,7 +81,8 @@ const useUsersList = () => {
       console.log(res.data);
       setError("");
     } catch (error) {
-      console.log("error: ", error);
+      setLoading(false)
+      console.log("error: ", error.response.data.message);
       setError(error.response.data.message);
     }
   };

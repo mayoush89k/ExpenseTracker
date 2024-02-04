@@ -46,7 +46,7 @@ export default function Menu() {
           </Link>
         </ul>
       ) : (
-        <ul className=" p-4 flex flex-col md:flex-row space-x-4 justify-center items-start md:items-center md:justify-center bg-light-1/50 dark:bg-dark-4/50 md:bg-transparent">
+        <ul className=" p-4 flex flex-col md:flex-row space-x-4 justify-center items-start md:items-center md:justify-center bg-light-1 dark:bg-dark-4 md:bg-transparent">
           {menuItems.map((item, index) => (
             <Link
               key={index}

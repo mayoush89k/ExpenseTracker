@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 export default function Services() {
   const [result, setResult] = useState("");
   const notify = (text) => toast(text);
-  const { sendEmail, deleteUser , error } = useUsersList();
+  const { sendEmail, deleteUser, error } = useUsersList();
   const { user, logOutUser } = useUser();
   const { prices, getAllPrices, dates, getAllDates } = useExpense();
   const recentDates = dates;
@@ -23,23 +23,21 @@ export default function Services() {
     console.log(dates);
   }, []);
   return (
-    <div className="pt-20 w-full h-[78vh] flex flex-col justify-start items-center">
+    <div className=" w-full h-[78vh] flex flex-col justify-start items-center">
       <ToastContainer />
       <button
         className="bg-light-4 dark:bg-dark-3 hover:bg-light-1 hover:text-light-4 dark:hover:text-dark-4 m-4 px-4 py-2 rounded transition duration-300 ease-in-out"
         onClick={() => {
           deleteUser(user);
-          if(error){
-            console.log(error)
-            notify(error.message)
-          }
-          else{
-            notify("User Deleted Successfully")
+          if (error) {
+            console.log(error);
+            notify(error.message);
+          } else {
+            notify("User Deleted Successfully");
             logOutUser();
             setTimeout(() => {
               navigate("/");
             }, 2000);
-
           }
         }}
       >
@@ -51,9 +49,14 @@ export default function Services() {
           setResult(
             await sendEmail(user.email, "Weekly record: ", user.username)
           );
-          setTimeout(() => {
-            notify(result);
-          }, 2000);
+          if (error == "" || error == null) {
+            setTimeout(() => {
+              notify('Emails has been sent');
+            }, 2000);
+          }else{
+            console.log(error)
+            notify(error)
+          }
         }}
       >
         Send Email
