@@ -8,7 +8,7 @@ const useUsersList = () => {
   const [error, setError] = useState(null);
   const { user, setUser } = useUser();
 
-    const url = "https://expense-tracker-api-vn03.onrender.com/";
+  const url = "https://expense-tracker-api-vn03.onrender.com/";
   // const url = "http://localhost:3434/";
 
   useEffect(() => {
@@ -47,6 +47,7 @@ const useUsersList = () => {
       if (data.message) {
         setError(data.message);
       }
+      setError("");
     } catch (error) {
       setLoading(false);
       setError(error);
@@ -55,36 +56,33 @@ const useUsersList = () => {
 
   // login user
   const loginUser = async (userData) => {
-    setLoading(true);
-    setError("");
+    console.log("userData: ", userData);
     try {
-      const response = await fetch(url + "users/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: userData.username,
-          password: userData.password,
-        }),
+      setError("");
+      setLoading(true);
+      const res = await axios.post(url + "users/login", {
+        username: userData.username,
+        password: userData.password,
       });
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+      console.log("res: ", res);
+      if (res.data.message) {
+        console.log("first error");
+        setError(res.data.message);
       }
-      const data = await response.json();
-      const token = data.token;
-
+      const token = res.data.token;
       setLoading(false);
       if (token) {
         localStorage.setItem("token", token);
       }
-      if (data.message) {
-        console.log("data: ", data);
-        setError(data.message);
+      if (res.data.message) {
+        setError(res.data.message);
       }
-      setUser(data.user)
-    } catch (err) {
-      console.log("err: ", err);
-      setLoading(false);
-      setError(err?.response.data.message);
+      setUser(res.data.user);
+      console.log(res.data);
+      setError("");
+    } catch (error) {
+      console.log("error: ", error);
+      setError(error.response.data.message);
     }
   };
 
@@ -97,16 +95,34 @@ const useUsersList = () => {
 
   const sendEmail = async (email, text) => {
     try {
-      const response = await axios.post(
-        url + "emails",
-      {body:  JSON.stringify({
+      const response = await axios.post(url + "emails", {
+        body: JSON.stringify({
           text: text,
-        })}
-      );
-      console.log(response)
-      return response.data
+        }),
+      });
+      console.log(response);
+      return await response.data;
     } catch (error) {
-      return error
+      setError(error);
+    }
+  };
+
+  const deleteUser = async (user) => {
+    try {
+      setLoading(true);
+      setError("");
+      console.log("${url}users/${user.id}: ", `${url}users/${user._id}`);
+      const res = await axios.delete(`${url}users/${user._id}`);
+      console.log("res: ", res);
+      setLoading(false);
+      if (res.message) {
+        setError(res);
+      }
+      setError("");
+    } catch (error) {
+      console.log("error: ", error);
+      setError(error.response.data);
+      setLoading(false);
     }
   };
 
@@ -118,6 +134,7 @@ const useUsersList = () => {
     updateUserInUsersList,
     createUser,
     loginUser,
+    deleteUser,
   };
 };
 

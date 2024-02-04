@@ -58,7 +58,7 @@ export default function Register() {
       )
     );
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // check passwords
     formList[3].value == formList[2].value
@@ -66,9 +66,9 @@ export default function Register() {
       : setPasswordConfirmedError("Passwords are not matched");
     // no error => passwords are matched
     if (passwordConfirmedError == "") {
-      createUser(formData);
+     await createUser(formData);
       // no error // success creating user
-      if (error == "") {
+      if (error == "" || !error) {
         notify("Your registration was successful. Welcome!!!");
         setTimeout(() => {
           navigate("/login");

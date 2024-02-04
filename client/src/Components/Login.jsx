@@ -17,7 +17,7 @@ export default function Login() {
       value: "",
     },
   ];
-  
+
   const [inputValues, setInputValues] = useState(form);
   const { loginUser, error } = useUsersList();
   let navigate = useNavigate();
@@ -31,10 +31,14 @@ export default function Login() {
       password: inputValues[1].value,
     };
     loginUser(currentUser).then(() => {
-      if (error == "" || isNaN(error)) {
+      console.log('error: ', error);
+      if (error) {
+        notify(error);
+      } else {
+        console.log('success')
         notify("Login Successfully");
-        setTimeout(() => navigate('/myHistory') , 5000)
-      } else notify(error);
+        setTimeout(() => navigate("/myHistory"), 5000);
+      }
     });
   };
 

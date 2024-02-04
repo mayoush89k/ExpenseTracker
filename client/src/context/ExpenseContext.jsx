@@ -87,8 +87,6 @@ export const ExpensesProvider = ({ children }) => {
     try {
       await getAll();
       const dates = expenses.map((e) => e.transactionDate);
-      console.log('dates: ', dates);
-
       setDates(dates);
       setLoading(false);
       return dates;
@@ -101,9 +99,7 @@ export const ExpensesProvider = ({ children }) => {
   const getAllPrices = async () => {
     try {
       await getAll();
-      console.log(expenses)
       const prices = expenses.map((e) => e.priceNIS || e.priceUSD);
-      console.log('prices: ', prices);
 
       setPrices(prices);
       setLoading(false);
