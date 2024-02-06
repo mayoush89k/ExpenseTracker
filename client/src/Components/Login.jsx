@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useUsersList from "../hooks/useUsersList";
 import { ToastContainer, toast } from "react-toastify";
@@ -19,27 +19,28 @@ export default function Login() {
   ];
 
   const [inputValues, setInputValues] = useState(form);
-  const { loginUser, error } = useUsersList();
+  const { loginUser, error, loading } = useUsersList();
   let navigate = useNavigate();
   const notify = (text) => toast(text);
 
+  useEffect(() => {
+    if (error == "Ok") {
+      console.log(error)
+      notify("Logged in successfully");
+      setTimeout(() => navigate("/myHistory"), 5000);
+    }
+  }, [error]);
   // const handleChange =
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const currentUser = {
       username: inputValues[0].value,
       password: inputValues[1].value,
     };
-    loginUser(currentUser).then(() => {
-      console.log("error: ", error);
-      if (error) {
-        notify(error);
-      } else if (error == "" || error == null) {
-        console.log("success");
-        notify("Login Successfully");
-        setTimeout(() => navigate("/myHistory"), 5000);
-      }
-    });
+    setTimeout(() => {
+      loginUser(currentUser);
+    }, 3000);
+    notify("Loading");
   };
 
   return (
@@ -49,6 +50,7 @@ export default function Login() {
         className="flex flex-col justify-center items-center gap-4 p-4 rounded-md  bg-light-4 shadow-light-3 shadow-md dark:bg-dark-3 dark:shadow-dark-1"
         onSubmit={handleSubmit}
       >
+        <p>{error}</p>
         {inputValues.map((value, index) => (
           <div key={index}>
             <input

@@ -15,9 +15,13 @@ const useUsersList = () => {
     fetchData();
   }, [url]);
 
+  useEffect(() => {
+    setLoading(true);
+    setError(""); // Reset error state when component mounts
+  }, []);
+
   //  get all users
   const fetchData = async () => {
-    setLoading(true);
     try {
       const response = await axios.get(url + "users/");
       setUsersList(response.data);
@@ -30,61 +34,50 @@ const useUsersList = () => {
 
   // signUp / register
   const createUser = async (userData) => {
-    setLoading(true);
-    setError("");
     try {
-      const response = await fetch(url + "users/signUp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: userData.username,
-          password: userData.password,
-          email: userData.email,
-        }),
-      });
-      const data = await response.json();
-      setLoading(false);
-      if (data.message) {
-        setError(data.message);
+      const res = await axios.post(url + "users/signUp", {
+        username: userData.username,
+        password: userData.password,
+        email: userData.email,
+      })
+      if (res.message) {
+        setError(res.message);
       }
-      setError("");
+      setLoading(false);
+      setError("Ok");
     } catch (error) {
       setLoading(false);
-      setError(error);
+      setError(error.response.data.message);
     }
   };
 
   // login user
   const loginUser = async (userData) => {
-    console.log("userData: ", userData);
     try {
-      setError("");
-      setLoading(true);
+      console.log('error ', error);
       const res = await axios.post(url + "users/login", {
         username: userData.username,
         password: userData.password,
       });
-      console.log("res: ", res);
-      if (res.data.message) {
-        console.log("first error");
-        setError(res.data.message);
+
+      const { data } = res;
+
+      // Check for error message in response data
+      if (data.message) {
+        setError(data.message);
+        return; // Exit function early if there's an error
       }
-      const token = res.data.token;
-      setLoading(false);
+
+      const { token, user } = data;
+
       if (token) {
         localStorage.setItem("token", token);
       }
-      if (res.data.message) {
-        setError(res.data.message);
-      }
-      setUser(res.data.user);
-      console.log(res.data);
-      setError("");
-    } catch (error) {
-      setLoading(false)
-      console.log("error: ", error.response.data.message);
-      setError(error.response.data.message);
-    }
+      setError('Ok')
+      setUser(user);
+    } catch (err) {
+      setError(err.response.data.message); 
+    } 
   };
 
   const updateUserInUsersList = async (user, newPark) => {
@@ -110,15 +103,11 @@ const useUsersList = () => {
 
   const deleteUser = async (user) => {
     try {
-      setLoading(true);
-      setError("");
-      console.log("${url}users/${user.id}: ", `${url}users/${user._id}`);
       const res = await axios.delete(`${url}users/${user._id}`);
-      console.log("res: ", res);
-      setLoading(false);
       if (res.message) {
         setError(res);
       }
+      setLoading(false);
       setError("");
     } catch (error) {
       console.log("error: ", error);

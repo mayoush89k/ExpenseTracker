@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useUser } from "../context/UserContext";
 import useUsersList from "../hooks/useUsersList";
 import { useNavigate } from "react-router-dom";
@@ -42,6 +42,15 @@ export default function Register() {
   let navigate = useNavigate();
   const notify = (text) => toast(text);
 
+  useEffect(() => {
+    if (error == "Ok") {
+      notify("Your registration was successful. Welcome!!!");
+      setTimeout(() => {
+        navigate("/login");
+      }, 5000);
+    }
+  }, [error]);
+
   const handleChange = (e) => {
     setPasswordConfirmedError("");
     if (e.target.name != "confirmed") {
@@ -66,14 +75,8 @@ export default function Register() {
       : setPasswordConfirmedError("Passwords are not matched");
     // no error => passwords are matched
     if (passwordConfirmedError == "") {
-     await createUser(formData);
-      // no error // success creating user
-      if (error == "" || !error) {
-        notify("Your registration was successful. Welcome!!!");
-        setTimeout(() => {
-          navigate("/login");
-        }, 5000);
-      }
+      await createUser(formData);
+      notify("Loading");
     }
   };
   return (
