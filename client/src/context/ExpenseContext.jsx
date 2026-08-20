@@ -6,8 +6,8 @@ export const ExpensesContext = createContext();
 export const useExpense = () => useContext(ExpensesContext);
 
 export const ExpensesProvider = ({ children }) => {
-  const url = "https://expense-tracker-api-vn03.onrender.com/";
-  // const url = "http://localhost:3434/";
+  // const url = "https://expense-tracker-api-vn03.onrender.com/";
+  const url = "http://localhost:3434/";
 
   const [prices, setPrices] = useState([]);
   const [dates, setDates] = useState([]);

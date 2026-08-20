@@ -32,7 +32,7 @@ export default function History() {
       ) : expenses.length == 0 ? (
         <h1 className="text-center">Empty List</h1>
       ) : (
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-1">
           {expenses.map((expense) => (
             <Card key={expense._id.toString()} expense={expense} />
           ))}

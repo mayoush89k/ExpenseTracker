@@ -50,7 +50,7 @@ export default function Login() {
         className="flex flex-col justify-center items-center gap-4 p-4 rounded-md  bg-light-4 shadow-light-3 shadow-md dark:bg-dark-3 dark:shadow-dark-1"
         onSubmit={handleSubmit}
       >
-        <p>{error}</p>
+        <p>{error.message}</p>
         {inputValues.map((value, index) => (
           <div key={index}>
             <input
