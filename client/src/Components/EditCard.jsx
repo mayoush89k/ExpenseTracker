@@ -18,7 +18,7 @@ export default function EditCard({ isOpen, onClose, expense }) {
 
   const [isEdit, setIsEdit] = useState(false);
   const [editedExpense, setEditedExpense] = useState(expense);
-  const { error, loading, updateExpense } = useExpense();
+  const { errorExpense, loading, updateExpense } = useExpense();
 
   const editHandler = () => {
     if (isEdit) {
@@ -65,7 +65,7 @@ export default function EditCard({ isOpen, onClose, expense }) {
           <HashLoader />
         ) : (
           <div>
-            {error && <p>error.message</p>}
+            {errorExpense && <p>errorExpense.message</p>}
             <h3>{editedExpense.onlineStore}</h3>
             <h3>{editedExpense.orderID}</h3>
             {isEdit ? (

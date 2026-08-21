@@ -6,13 +6,13 @@ export const ExpensesContext = createContext();
 export const useExpense = () => useContext(ExpensesContext);
 
 export const ExpensesProvider = ({ children }) => {
-  // const url = "https://expense-tracker-api-vn03.onrender.com/";
-  const url = "http://localhost:3434/";
+  const url = "https://expense-tracker-api-vn03.onrender.com/";
+  // const url = "http://localhost:3434/";
 
   const [prices, setPrices] = useState([]);
   const [dates, setDates] = useState([]);
   const [expenses, setExpenses] = useState([]);
-  const [error, setError] = useState("");
+  const [errorExpense, setErrorExpense] = useState("");
   const [loading, setLoading] = useState(false);
 
   // Add expense to the list of expenses.
@@ -34,9 +34,9 @@ export const ExpensesProvider = ({ children }) => {
       setLoading(false);
       await fetchGetAllExpenses();
       return expense.data;
-    } catch (error) {
+    } catch (errorExpense) {
       setLoading(false);
-      setError(error);
+      setErrorExpense(errorExpense);
     }
   };
   // update expense
@@ -59,7 +59,7 @@ export const ExpensesProvider = ({ children }) => {
       await fetchGetAllExpenses();
       setLoading(false);
     } catch (error) {
-      setError(error);
+      setErrorExpense(error.message);
     }
   };
 
@@ -79,7 +79,7 @@ export const ExpensesProvider = ({ children }) => {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      setError(error);
+      setErrorExpense(error.message);
     }
   };
 
@@ -92,7 +92,7 @@ export const ExpensesProvider = ({ children }) => {
       return dates;
     } catch (error) {
       setLoading(false);
-      setError(error);
+      setErrorExpense(error.message);
     }
   };
 
@@ -105,7 +105,7 @@ export const ExpensesProvider = ({ children }) => {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      setError(error);
+      setErrorExpense(error.message);
     }
   };
   return (
@@ -114,8 +114,8 @@ export const ExpensesProvider = ({ children }) => {
         expenses,
         dates,
         prices,
-        error,
-        setError,
+        errorExpense,
+        setErrorExpense,
         loading,
         getAll,
         getAllDates,
