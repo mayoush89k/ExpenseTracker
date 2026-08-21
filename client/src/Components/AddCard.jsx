@@ -18,14 +18,14 @@ export default function AddCard({ isOpen, onClose, expense }) {
     ? "translate-y-0 opacity-100"
     : "translate-y-10 opacity-0";
 
-  const { expenses, error, setError, loading, createNewExpense } = useExpense();
+  const { expenses, errorExpense, setErrorExpense, loading, createNewExpense } = useExpense();
 
   const saveHandle = () => {
     console.log('setIsEdit: ', isEdit);
     createNewExpense(newExpense);
     console.log('newExpense: ', newExpense);
-    !error && setIsEdit(false);
-    if (error && loading) {
+    !errorExpense && setIsEdit(false);
+    if (errorExpense && loading) {
       setTimeout(() => {
         onClose();
       }, 2000);
@@ -46,7 +46,7 @@ export default function AddCard({ isOpen, onClose, expense }) {
             if (isOpen) {
               onClose();
               setNewExpense({});
-              setError(null);
+              setErrorExpense(null);
               setIsEdit(true);
             }
           }}
@@ -72,9 +72,9 @@ export default function AddCard({ isOpen, onClose, expense }) {
           <HashLoader />
         ) : (
           <div>
-            {/* error */}
-            {error ? (
-              <p>Error:{error.message} || {error?.response?.data?.message}</p>
+            {/* errorExpense */}
+            {errorExpense ? (
+              <p>ErrorExpense:{errorExpense} || {errorExpense?.response?.data?.message}</p>
             ) : (
               <form>
                 {/* new Expense */}
