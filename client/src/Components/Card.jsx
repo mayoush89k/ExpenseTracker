@@ -15,7 +15,7 @@ export default function Card({ expense }) {
   let date = new Date(expense.transactionDate).toLocaleDateString("en-GB");
   return (
     <div
-      className="grid grid-cols-4  items-center justify-between max-w-[90%] cursor-pointer group max-w-md mx-auto my-2 rounded-md overflow-hidden text-lg md:text-2xl
+      className="grid grid-cols-4  items-center justify-between max-w-[90%] cursor-pointer group mx-auto my-2 rounded-md overflow-hidden text-lg md:text-2xl
        bg-white dark:bg-gray-800 text-gray-800 
        dark:text-white shadow-md dark:shadow-outer dark:bg-dark-2  dark:shadow-dark-1 "
       onClick={() => !isModalOpen && openModal()}
