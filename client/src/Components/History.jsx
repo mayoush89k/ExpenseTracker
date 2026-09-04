@@ -16,9 +16,7 @@ export default function History() {
   useEffect(() => {
     getAll();
   }, []);
-  useEffect(() => {
-    console.log(loading);
-  }, [loading]);
+
   return (
     <main className="px-10 w-[100%] md:px-2 py-8 m-1 md:m-4 lg:m-6 xl:m-8 min-h-[77vh]">
       {loading ? (

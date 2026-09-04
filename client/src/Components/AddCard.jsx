@@ -18,17 +18,21 @@ export default function AddCard({ isOpen, onClose, expense }) {
     ? "translate-y-0 opacity-100"
     : "translate-y-10 opacity-0";
 
-  const { expenses, errorExpense, setErrorExpense, loading, createNewExpense } = useExpense();
+  const { expenses, errorExpense, setErrorExpense, loading, createNewExpense } =
+    useExpense();
 
   const saveHandle = () => {
-    console.log('setIsEdit: ', isEdit);
-    createNewExpense(newExpense);
-    console.log('newExpense: ', newExpense);
-    !errorExpense && setIsEdit(false);
-    if (errorExpense && loading) {
-      setTimeout(() => {
-        onClose();
-      }, 2000);
+    try {
+      createNewExpense(newExpense);
+      console.log("setIsEdit: ", isEdit);
+      console.log("newExpense: ", newExpense);
+      onClose();
+    } catch (error) {
+      if (errorExpense && loading) {
+        setTimeout(() => {
+          onClose();
+        }, 2000);
+      }
     }
   };
   return (
@@ -74,7 +78,10 @@ export default function AddCard({ isOpen, onClose, expense }) {
           <div>
             {/* errorExpense */}
             {errorExpense ? (
-              <p>ErrorExpense:{errorExpense} || {errorExpense?.response?.data?.message}</p>
+              <p>
+                ErrorExpense:{errorExpense} ||{" "}
+                {errorExpense?.response?.data?.message}
+              </p>
             ) : (
               <form>
                 {/* new Expense */}

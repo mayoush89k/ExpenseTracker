@@ -27,9 +27,8 @@ export const ExpensesProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...newExpense }),
+        body: JSON.stringify(newExpense),
       });
-
       setExpenses([...expenses, expense.data]);
       setLoading(false);
       await fetchGetAllExpenses();
@@ -54,7 +53,7 @@ export const ExpensesProvider = ({ children }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(newExpense),
-        }
+        },
       );
       await fetchGetAllExpenses();
       setLoading(false);
