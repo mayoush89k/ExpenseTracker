@@ -10,7 +10,7 @@ import { ExpensesProvider } from "./context/ExpenseContext";
 import Services from "./Components/Services";
 import Register from "./Components/Register";
 import { UserProvider } from "./context/UserContext";
-import { FaBars } from "react-icons/fa";
+import { FaArrowLeft, FaBars } from "react-icons/fa";
 import { useState } from "react";
 import Footer from "./Components/Footer";
 
@@ -28,8 +28,11 @@ function App() {
             {window.innerWidth > 750 ? (
               <Menu />
             ) : (
-              <div className="py-8 px-1 absolute md:block " onClick={onMenuClicked}>
-                <FaBars />
+              <div
+                className="py-8 px-1 absolute md:block "
+                onClick={onMenuClicked}
+              >
+                {!menuViewer && <FaBars />}
                 <div
                   className={
                     menuViewer
@@ -37,7 +40,14 @@ function App() {
                       : "translate-x-[-100px] duration-700"
                   }
                 >
-                  {menuViewer && <Menu />}
+                  {menuViewer && (
+                    <div>
+                      <button onClick={() => setMenuViewer(false)}>
+                        <FaArrowLeft />{" "}
+                      </button>
+                      <Menu />
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -50,7 +60,7 @@ function App() {
               <Route path="/contactUs" element={<ContactUs />} />
               <Route path="/services" element={<Services />} />
             </Routes>
-            <Footer/>
+            <Footer />
           </BrowserRouter>
         </UserProvider>
       </ExpensesProvider>

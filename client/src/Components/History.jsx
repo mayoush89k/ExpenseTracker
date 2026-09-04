@@ -20,7 +20,7 @@ export default function History() {
     console.log(loading);
   }, [loading]);
   return (
-    <main className="px-10 md:px-24 py-8 m-1 md:m-4 lg:m-6 xl:m-8 min-h-[77vh]">
+    <main className="px-10 w-[100%] md:px-2 py-8 m-1 md:m-4 lg:m-6 xl:m-8 min-h-[77vh]">
       {loading ? (
         <SpinnerDotted
           className="m-auto"
@@ -32,14 +32,14 @@ export default function History() {
       ) : expenses.length == 0 ? (
         <h1 className="text-center">Empty List</h1>
       ) : (
-        <div className="flex flex-wrap gap-1">
+        <div> 
           {expenses.map((expense) => (
             <Card key={expense._id.toString()} expense={expense} />
           ))}
         </div>
       )}
       <button
-        className="fixed bottom-6 right-5 bg-blue-500 px-2 py-1 md:px-4 md:py-2 rounded-full shadow-md
+        className="fixed bottom-20 right-5 bg-blue-500 px-2 py-1 md:px-4 md:py-2 rounded-full shadow-md
       text-light-4 hover:bg-light-4 hover:text-light-1 shadow-light-4
       dark:text-dark-1 dark:hover:bg-dark-1 dark:hover:text-dark-4 dark:shadow-dark-1"
         onClick={() => openModal()}
