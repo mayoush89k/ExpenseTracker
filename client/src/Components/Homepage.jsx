@@ -15,7 +15,7 @@ export default function Homepage() {
         alt="wallpaper"
         width={700}
         height={700}
-        className="my-16"
+        className="w-[90%] h-auto md:w-[50%] h-auto lg:h-[95%] w-auto object-contain"
       />
     </div>
   );

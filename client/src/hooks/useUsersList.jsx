@@ -28,6 +28,8 @@ const useUsersList = () => {
       setLoading(false);
     } catch (error) {
       setError(error);
+      console.log(error);
+      
       setLoading(false);
     }
   };
@@ -41,12 +43,16 @@ const useUsersList = () => {
         email: userData.email,
       })
       if (res.message) {
+        console.log(res.message);
+        
         setError(res.message);
       }
       setLoading(false);
       setError("Ok");
     } catch (error) {
       setLoading(false);
+      console.log(error.response.data.message);
+      
       setError(error.response.data.message);
     }
   };
@@ -54,7 +60,6 @@ const useUsersList = () => {
   // login user
   const loginUser = async (userData) => {
     try {
-      console.log('error ', error);
       const res = await axios.post(url + "users/login", {
         username: userData.username,
         password: userData.password,
@@ -65,6 +70,8 @@ const useUsersList = () => {
       // Check for error message in response data
       if (data.message) {
         setError(data.message);
+        console.log(data.message);
+        
         return; // Exit function early if there's an error
       }
 
@@ -76,15 +83,17 @@ const useUsersList = () => {
       setError('Ok')
       setUser(user);
     } catch (err) {
+      console.log(err.response.data.message);
+      
       setError(err.response.data.message); 
     } 
   };
 
-  const updateUserInUsersList = async (user, newPark) => {
+  const updateUserInUsersList = async (user, newExpense) => {
     const response = await axios.put(url + "users/" + user.id, {
-      parksAdded: [...user.parksAdded, newPark],
+      expenseAdded: [...user.expenseAdded, newExpense],
     });
-    console.log("Added ", newPark);
+    console.log("Added ", newExpense);
   };
 
   const sendEmail = async (email, text) => {

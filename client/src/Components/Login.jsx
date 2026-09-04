@@ -27,7 +27,7 @@ export default function Login() {
     if (error == "Ok") {
       console.log(error)
       notify("Logged in successfully");
-      setTimeout(() => navigate("/myHistory"), 5000);
+      setTimeout(() => navigate("/myHistory"), 2000);
     }
   }, [error]);
   // const handleChange =
@@ -39,7 +39,7 @@ export default function Login() {
     };
     setTimeout(() => {
       loginUser(currentUser);
-    }, 3000);
+    }, 2000);
     notify("Loading");
   };
 
